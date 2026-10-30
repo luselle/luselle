@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Luselle: peluquería y belleza. Descubre nuestros servicios y reserva tu próxima cita.">
+  <title>Luselle | Belleza que habla por ti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Luselle, ir al inicio"><span class="brand-mark">L</span><span>Luselle<span class="brand-dot">.</span></span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <nav class="nav" id="mainNav">
+      <a href="#inicio">Inicio</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+      <a class="nav-login" href="login.html">Iniciar sesión</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-content">
+        <span class="eyebrow"><span class="eyebrow-line"></span> TU MOMENTO, TU BELLEZA</span>
+        <h1>Brilla con tu<br><em>propia esencia.</em></h1>
+        <p>En Luselle creemos que cada detalle cuenta. Regálate un momento para ti y deja que nuestro equipo resalte lo mejor de tu estilo.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="login.html">Reserva tu cita <span>↗</span></a>
+          <a class="text-link" href="#servicios">Descubrir servicios <span>↓</span></a>
+        </div>
+        <div class="hero-note"><span class="note-star">✳</span><span><strong>Un espacio para ti</strong><br> Belleza, cuidado y confianza.</span></div>
+      </div>
+      <div class="hero-art" aria-label="Imagen decorativa de belleza">
+        <div class="art-blob"></div>
+        <div class="art-circle circle-one"></div>
+        <div class="art-circle circle-two"></div>
+        <div class="art-label">BEAUTY<br>IS A FEELING</div>
+        <div class="art-card"><span>✦</span><div><strong>Tu belleza</strong><small> merece tiempo.</small></div></div>
+        <div class="art-image-placeholder"><span>LU</span><small>IMAGEN PRINCIPAL</small></div>
+      </div>
+      <a class="scroll-cue" href="#servicios">DESLIZA PARA DESCUBRIR <span>↓</span></a>
+    </section>
+
+    <section class="section services-section" id="servicios">
+      <div class="section-heading">
+        <div><span class="eyebrow">NUESTROS SERVICIOS</span><h2>Un toque especial<br>para cada versión de ti.</h2></div>
+        <p>Encuentra ese cuidado que estás buscando. Cada servicio está pensado para que salgas sintiéndote increíble.</p>
+      </div>
+      <div class="service-grid">
+        <article class="service-card service-pink"><span class="service-number">01</span><div class="service-icon">✂</div><h3>Corte y estilo</h3><p>Cortes personalizados que reflejan tu personalidad y estilo.</p><a href="login.html">Solicitar servicio <span>↗</span></a></article>
+        <article class="service-card service-lilac"><span class="service-number">02</span><div class="service-icon">✿</div><h3>Coloración</h3><p>Color, brillo y técnicas para renovar tu look.</p><a href="login.html">Solicitar servicio <span>↗</span></a></article>
+        <article class="service-card service-peach"><span class="service-number">03</span><div class="service-icon">♡</div><h3>Tratamientos</h3><p>Cuidados especiales para consentir y revitalizar tu cabello.</p><a href="login.html">Solicitar servicio <span>↗</span></a></article>
+      </div>
+      <p class="service-footnote">Los servicios, precios y duraciones definitivos se publicarán aquí cuando sean configurados por la gerencia.</p>
+    </section>
+
+    <section class="about-section" id="nosotros">
+      <div class="about-decoration">L</div>
+      <div class="about-copy"><span class="eyebrow">CONOCE LUSELLE</span><h2>La belleza también<br>es sentirte <em>bien.</em></h2><p>Más que una peluquería, queremos ser ese lugar donde puedas hacer una pausa, disfrutar del cuidado personal y expresar quién eres. Nuestro propósito es brindarte una experiencia cercana, profesional y especial.</p><a class="button button-light" href="#contacto">Conócenos <span>↗</span></a></div>
+      <div class="about-stamp"><span>LU</span><small>BEAUTY<br>STUDIO</small></div>
+    </section>
+
+    <section class="contact-section section" id="contacto">
+      <div><span class="eyebrow">ESTAMOS PARA TI</span><h2>Tu próximo momento<br>favorito comienza aquí.</h2></div>
+      <div class="contact-details"><p>¿Tienes dudas sobre nuestros servicios? Escríbenos o visítanos. Estaremos felices de atenderte.</p><div class="contact-line"><span>HORARIOS</span><strong>Por confirmar</strong></div><div class="contact-line"><span>UBICACIÓN</span><strong>Dirección del negocio por agregar</strong></div><a class="button button-primary" href="login.html">Quiero reservar <span>↗</span></a></div>
+    </section>
+  </main>
+
+  <footer class="footer"><a class="brand brand-footer" href="#inicio"><span class="brand-mark">L</span><span>Luselle<span class="brand-dot">.</span></span></a><span>© <span id="year"></span> Luselle. Todos los derechos reservados.</span><a href="login.html">Acceso de usuarios</a></footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
