@@ -1,9 +1,347 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Mi espacio | Luselle</title><link rel="stylesheet" href="css/styles.css"></head><body class="dashboard-page"><header class="dash-header"><a class="brand" href="index.html"><span class="brand-mark">L</span><span>Luselle<span class="brand-dot">.</span></span></a><div><span id="welcomeUser">Hola</span> <button class="button button-small button-outline" id="logoutBtn">Cerrar sesión</button></div></header><main class="dashboard"><div class="dash-title"><div><span class="eyebrow">LUSELLE · CLIENT</span><h1>Mi espacio</h1><p>Solicita tus servicios y consulta tus tickets.</p></div><a class="text-link" href="index.html">Ver página pública ↗</a></div>
-    <div id="notice" class="notice" role="status"></div>
-    <section id="clientCreate" class="panel" hidden><h2>Solicitar una cita</h2><form id="ticketForm" class="form-grid"><label>Servicio<select name="service_id" id="serviceSelect" required><option value="">Cargando servicios...</option></select></label><label>Fecha deseada<input name="requested_date" type="date" required></label><label>Hora deseada<input name="requested_time" type="time" required></label><label class="full">Cuéntanos algún detalle (opcional)<textarea name="notes" rows="3" maxlength="1000" placeholder="Ej. Tengo el cabello largo..."></textarea></label><div class="full"><button class="button button-primary" type="submit">Enviar solicitud ↗</button></div></form></section>
-    <section id="staffCreate" class="panel" hidden><h2>Crear usuario del equipo</h2><form id="staffForm" class="form-grid"><label>Nombre completo<input name="name" required></label><label>Correo<input name="email" type="email" required></label><label>Usuario<input name="username" required minlength="3"></label><label>Teléfono<input name="phone"></label><label>Contraseña temporal<input name="password" type="password" minlength="8" required></label><label>Rol<select name="role"><option value="employee">Empleado</option><option value="manager">Gerente</option></select></label><div class="full"><button class="button button-primary">Crear usuario</button></div></form></section>
-    <section id="serviceCreate" class="panel" hidden><h2>Agregar servicio</h2><form id="serviceForm" class="form-grid"><label>Nombre<input name="name" required></label><label>Precio en COP (opcional)<input name="price" type="number" min="0"></label><label class="full">Descripción<textarea name="description" rows="2"></textarea></label><div class="full"><button class="button button-primary">Agregar servicio</button></div></form></section>
-    <section class="panel"><div class="panel-heading"><h2 id="ticketsHeading">Mis tickets</h2><button class="button button-small button-outline" id="refreshBtn">Actualizar</button></div><div id="ticketsList" class="ticket-list">Cargando...</div></section>
-    <section id="usersPanel" class="panel" hidden><h2>Equipo de Luselle</h2><div id="usersList">Cargando...</div></section>
-    <section id="servicesPanel" class="panel" hidden><h2>Servicios publicados</h2><div id="servicesList">Cargando...</div></section>
-    </main><script src="js/config.js"></script><script src="js/api.js"></script><script src="js/dashboard.js"></script></body></html>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Espacio personal de clientes de Luselle.">
+
+    <title>Mi espacio | Luselle</title>
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- ENCABEZADO -->
+    <header class="dash-header">
+
+        <a class="brand" href="index.html">
+            <span class="brand-mark">L</span>
+            <span>Luselle<span class="brand-dot">.</span></span>
+        </a>
+
+        <div>
+            <span id="welcomeUser">Hola</span>
+
+            <button
+                class="button button-small button-outline"
+                id="logoutBtn"
+                type="button">
+                Cerrar sesión
+            </button>
+        </div>
+
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="dashboard">
+
+        <!-- TÍTULO -->
+        <div class="dash-title">
+
+            <div>
+                <span class="eyebrow">
+                    LUSELLE · CLIENT
+                </span>
+
+                <h1>Mi espacio</h1>
+
+                <p>
+                    Solicita tus servicios y consulta tus tickets.
+                </p>
+            </div>
+
+            <a class="text-link" href="index.html">
+                Ver página pública ↗
+            </a>
+
+        </div>
+
+        <!-- MENSAJES DEL SISTEMA -->
+        <div
+            id="notice"
+            class="notice"
+            role="status">
+        </div>
+
+        <!-- SOLICITAR UNA CITA -->
+        <section
+            id="clientCreate"
+            class="panel"
+            hidden>
+
+            <h2>Solicitar una cita</h2>
+
+            <form id="ticketForm" class="form-grid">
+
+                <label>
+                    Servicio
+
+                    <select
+                        name="service_id"
+                        id="serviceSelect"
+                        required>
+
+                        <option value="">
+                            Cargando servicios...
+                        </option>
+
+                    </select>
+                </label>
+
+                <label>
+                    Fecha deseada
+
+                    <input
+                        name="requested_date"
+                        type="date"
+                        required>
+                </label>
+
+                <label>
+                    Hora deseada
+
+                    <input
+                        name="requested_time"
+                        type="time"
+                        required>
+                </label>
+
+                <label class="full">
+                    Cuéntanos algún detalle (opcional)
+
+                    <textarea
+                        name="notes"
+                        rows="3"
+                        maxlength="1000"
+                        placeholder="Ej. Tengo el cabello largo y quiero realizarme un tratamiento...">
+                    </textarea>
+                </label>
+
+                <div class="full">
+
+                    <button
+                        class="button button-primary"
+                        type="submit">
+                        Enviar solicitud ↗
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- CREAR USUARIO DEL EQUIPO -->
+        <section
+            id="staffCreate"
+            class="panel"
+            hidden>
+
+            <h2>Crear usuario del equipo</h2>
+
+            <form id="staffForm" class="form-grid">
+
+                <label>
+                    Nombre completo
+
+                    <input
+                        name="name"
+                        type="text"
+                        required>
+                </label>
+
+                <label>
+                    Correo electrónico
+
+                    <input
+                        name="email"
+                        type="email"
+                        required>
+                </label>
+
+                <label>
+                    Nombre de usuario
+
+                    <input
+                        name="username"
+                        type="text"
+                        required
+                        minlength="3">
+                </label>
+
+                <label>
+                    Teléfono
+
+                    <input
+                        name="phone"
+                        type="tel">
+                </label>
+
+                <label>
+                    Contraseña temporal
+
+                    <input
+                        name="password"
+                        type="password"
+                        minlength="8"
+                        required>
+                </label>
+
+                <label>
+                    Rol
+
+                    <select name="role">
+                        <option value="employee">
+                            Empleado
+                        </option>
+
+                        <option value="manager">
+                            Gerente
+                        </option>
+                    </select>
+                </label>
+
+                <div class="full">
+
+                    <button
+                        class="button button-primary"
+                        type="submit">
+                        Crear usuario ↗
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- AGREGAR SERVICIOS -->
+        <section
+            id="serviceCreate"
+            class="panel"
+            hidden>
+
+            <h2>Agregar servicio</h2>
+
+            <form id="serviceForm" class="form-grid">
+
+                <label>
+                    Nombre del servicio
+
+                    <input
+                        name="name"
+                        type="text"
+                        required>
+                </label>
+
+                <label>
+                    Precio en COP (opcional)
+
+                    <input
+                        name="price"
+                        type="number"
+                        min="0">
+                </label>
+
+                <label class="full">
+                    Descripción
+
+                    <textarea
+                        name="description"
+                        rows="3"
+                        placeholder="Describe el servicio...">
+                    </textarea>
+                </label>
+
+                <div class="full">
+
+                    <button
+                        class="button button-primary"
+                        type="submit">
+                        Agregar servicio ↗
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+        <!-- MIS TICKETS -->
+        <section class="panel">
+
+            <div class="panel-heading">
+
+                <h2 id="ticketsHeading">
+                    Mis tickets
+                </h2>
+
+                <button
+                    class="button button-small button-outline"
+                    id="refreshBtn"
+                    type="button">
+                    Actualizar
+                </button>
+
+            </div>
+
+            <div
+                id="ticketsList"
+                class="ticket-list">
+
+                Cargando tickets...
+
+            </div>
+
+        </section>
+
+        <!-- EQUIPO DE LUSELLE -->
+        <section
+            id="usersPanel"
+            class="panel"
+            hidden>
+
+            <h2>Equipo de Luselle</h2>
+
+            <div id="usersList">
+                Cargando usuarios...
+            </div>
+
+        </section>
+
+        <!-- SERVICIOS PUBLICADOS -->
+        <section
+            id="servicesPanel"
+            class="panel"
+            hidden>
+
+            <h2>Servicios publicados</h2>
+
+            <div id="servicesList">
+                Cargando servicios...
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+
+</body>
+</html>
