@@ -283,6 +283,66 @@
 
     </footer>
 
+        <!-- CHATBOT LUSELLE -->
+    <div class="chatbot-widget" id="chatbotWidget">
+
+        <section class="chatbot-window" id="chatbotWindow" hidden>
+
+            <header class="chatbot-header">
+                <div class="chatbot-avatar">L</div>
+
+                <div class="chatbot-header-info">
+                    <strong>Asistente Luselle</strong>
+                    <small><span class="chatbot-online"></span> En línea</small>
+                </div>
+
+                <button
+                    type="button"
+                    class="chatbot-close"
+                    id="chatbotClose"
+                    aria-label="Cerrar chat">
+                    ×
+                </button>
+            </header>
+
+            <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
+                <div class="chat-message bot-message">
+                    ¡Hola! 💗 Soy el asistente virtual de Luselle.
+                    Estoy aquí para ayudarte con nuestros servicios y resolver tus dudas.
+                </div>
+            </div>
+
+            <form class="chatbot-form" id="chatbotForm">
+                <input
+                    type="text"
+                    id="chatbotInput"
+                    placeholder="Escribe tu pregunta..."
+                    autocomplete="off"
+                    maxlength="1500"
+                    required>
+
+                <button type="submit" id="chatbotSend" aria-label="Enviar mensaje">
+                    ➤
+                </button>
+            </form>
+
+            <div class="chatbot-footer">
+                Asistente virtual de Luselle
+            </div>
+
+        </section>
+
+        <button
+            type="button"
+            class="chatbot-toggle"
+            id="chatbotToggle"
+            aria-label="Abrir asistente virtual"
+            aria-expanded="false">
+            <span id="chatbotToggleIcon">💬</span>
+        </button>
+
+    </div>
+
     <!-- JAVASCRIPT -->
     <script src="js/config.js"></script>
     <script src="js/api.js"></script>
