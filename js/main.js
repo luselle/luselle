@@ -1,36 +1,109 @@
+
+/* =========================================
+   MENÚ DE NAVEGACIÓN
+========================================= */
+
 const menuToggle = document.getElementById("menuToggle");
 const mainNav = document.getElementById("mainNav");
 
 if (menuToggle && mainNav) {
-  menuToggle.addEventListener("click", () => {
-    const isOpen = mainNav.classList.toggle("open");
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-    menuToggle.textContent = isOpen ? "×" : "☰";
-  });
+    menuToggle.addEventListener("click", () => {
+        const isOpen = mainNav.classList.toggle("open");
 
-  mainNav.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      mainNav.classList.remove("open");
-      menuToggle.setAttribute("aria-expanded", "false");
-      menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+        menuToggle.textContent = isOpen ? "×" : "☰";
     });
-  });
+
+    mainNav.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+            mainNav.classList.remove("open");
+            menuToggle.setAttribute("aria-expanded", "false");
+            menuToggle.textContent = "☰";
+        });
+    });
 }
 
-const year = document.getElementById("year");
-if (year) year.textContent = new Date().getFullYear();
-
-const loginForm = document.getElementById("loginForm");
-if (loginForm) {
-  loginForm.addEventListener("submit", event => {
-    event.preventDefault();
-    const message = document.getElementById("formMessage");
-    message.textContent = "La pantalla está preparada. El inicio de sesión se activará al conectar el backend PHP y MySQL.";
-  });
-}
 
 /* =========================================
-   CHATBOT LUSELLE - CONEXIÓN CON GROQ
+   AÑO AUTOMÁTICO
+========================================= */
+
+const year = document.getElementById("year");
+
+if (year) {
+    year.textContent = new Date().getFullYear();
+}
+
+
+/* =========================================
+   CARGAR SERVICIOS DESDE CLOUDFLARE D1
+========================================= */
+
+async function loadPublicServices() {
+    const container = document.getElementById("publicServices");
+
+    if (!container) return;
+
+    try {
+        container.innerHTML = `
+            <p class="service-loading">Cargando servicios...</p>
+        `;
+
+        const data = await window.Luselle.api("/api/services");
+
+        const services = data.services || [];
+
+        if (services.length === 0) {
+            container.innerHTML = `
+                <p class="service-loading">
+                    Actualmente no hay servicios disponibles.
+                </p>
+            `;
+            return;
+        }
+
+        container.innerHTML = services.map((service, index) => `
+            <article class="service-card">
+
+                <span class="service-number">
+                    ${(index + 1).toString().padStart(2, "0")}
+                </span>
+
+                <h3 class="service-name">
+                    ${window.Luselle.escape(service.name)}
+                </h3>
+
+                <p class="service-description">
+                    ${window.Luselle.escape(
+                        service.description || "Servicio de belleza y cuidado capilar."
+                    )}
+                </p>
+
+                <p class="service-price">
+                    ${window.Luselle.money(service.price)}
+                </p>
+
+            </article>
+        `).join("");
+
+    } catch (error) {
+        console.error("Error cargando los servicios:", error);
+
+        container.innerHTML = `
+            <p class="service-loading">
+                No fue posible cargar los servicios.
+                Intenta nuevamente más tarde.
+            </p>
+        `;
+    }
+}
+
+// Ejecutar la consulta
+loadPublicServices();
+
+
+/* =========================================
+   CHATBOT LUSELLE - GROQ
 ========================================= */
 
 const chatbotToggle = document.getElementById("chatbotToggle");
@@ -48,13 +121,21 @@ const CHATBOT_API = "https://luselle-api.luselle7.workers.dev/api/chat";
 let chatbotHistory = [];
 let chatbotIsLoading = false;
 
-// Abrir y cerrar el chatbot
-function toggleChatbot(open) {
-    chatbotWindow.hidden = !open;
-    chatbotToggle.setAttribute("aria-expanded", String(open));
-    chatbotToggleIcon.textContent = open ? "×" : "💬";
 
-    if (open) {
+/* Abrir y cerrar chatbot */
+
+function toggleChatbot(open) {
+    if (!chatbotWindow || !chatbotToggle) return;
+
+    chatbotWindow.hidden = !open;
+
+    chatbotToggle.setAttribute("aria-expanded", String(open));
+
+    if (chatbotToggleIcon) {
+        chatbotToggleIcon.textContent = open ? "×" : "💬";
+    }
+
+    if (open && chatbotInput) {
         chatbotInput.focus();
     }
 }
@@ -71,8 +152,12 @@ if (chatbotClose) {
     });
 }
 
-// Agregar mensajes sin interpretar HTML
+
+/* Agregar mensajes */
+
 function addChatMessage(text, sender) {
+    if (!chatbotMessages) return;
+
     const message = document.createElement("div");
 
     message.classList.add("chat-message");
@@ -88,8 +173,12 @@ function addChatMessage(text, sender) {
     return message;
 }
 
-// Indicador de espera
+
+/* Indicador de escritura */
+
 function showTyping() {
+    if (!chatbotMessages) return null;
+
     const typing = document.createElement("div");
 
     typing.className = "chatbot-typing";
@@ -101,9 +190,16 @@ function showTyping() {
     return typing;
 }
 
-// Enviar mensaje
-if (chatbotForm) {
-    chatbotForm.addEventListener("submit", async (event) => {
+
+/* Enviar mensajes */
+
+if (
+    chatbotForm &&
+    chatbotInput &&
+    chatbotMessages &&
+    chatbotSend
+) {
+    chatbotForm.addEventListener("submit", async event => {
         event.preventDefault();
 
         const userMessage = chatbotInput.value.trim();
@@ -111,6 +207,7 @@ if (chatbotForm) {
         if (!userMessage || chatbotIsLoading) return;
 
         chatbotIsLoading = true;
+
         chatbotSend.disabled = true;
         chatbotInput.disabled = true;
 
@@ -155,7 +252,6 @@ if (chatbotForm) {
 
             addChatMessage(data.reply, "assistant");
 
-            // Conservar únicamente los últimos 10 mensajes
             chatbotHistory = chatbotHistory.slice(-10);
 
         } catch (error) {
@@ -166,13 +262,13 @@ if (chatbotForm) {
                 "assistant"
             );
 
-            // Retirar el mensaje que no pudo enviarse
             chatbotHistory.pop();
 
         } finally {
-            typing.remove();
+            if (typing) typing.remove();
 
             chatbotIsLoading = false;
+
             chatbotSend.disabled = false;
             chatbotInput.disabled = false;
 
